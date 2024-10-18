@@ -8,6 +8,7 @@ import (
 )
 
 func Test_folder_MoveFolder(t *testing.T) {
+	const dataFile = "./testData/moveFolder_exampleScenario.json"
 	t.Parallel()
 	tests := [...]struct {
 		name    string
@@ -22,23 +23,23 @@ func Test_folder_MoveFolder(t *testing.T) {
 			name:    "case where destination shares a parent folder",
 			source:  "bravo",
 			dst:     "delta",
-			folders: folder.GetSampleData("moveFolder_exampleScenario.json"),
-			want:    folder.GetSampleData("moveFolder_Test_1.json"),
+			folders: folder.GetSampleData(dataFile),
+			want:    folder.GetSampleData("./testData/moveFolder_Test_1.json"),
 			isError: false,
 		},
 		{
 			name:    "case where destination does not have a parent folder",
 			source:  "bravo",
 			dst:     "golf",
-			folders: folder.GetSampleData("moveFolder_exampleScenario.json"),
-			want:    folder.GetSampleData("moveFolder_Test_2.json"),
+			folders: folder.GetSampleData(dataFile),
+			want:    folder.GetSampleData("./testData/moveFolder_Test_2.json"),
 			isError: false,
 		},
 		{
 			name:        "moving a folder to a child of itself",
 			source:      "bravo",
 			dst:         "charlie",
-			folders:     folder.GetSampleData("moveFolder_exampleScenario.json"),
+			folders:     folder.GetSampleData(dataFile),
 			isError:     true,
 			errorString: "cannot move a folder to a child of itself",
 		},
@@ -46,7 +47,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			name:        "moving a folder to itself",
 			source:      "bravo",
 			dst:         "bravo",
-			folders:     folder.GetSampleData("moveFolder_exampleScenario.json"),
+			folders:     folder.GetSampleData(dataFile),
 			isError:     true,
 			errorString: "cannot move a folder to itself",
 		},
@@ -54,7 +55,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			name:        "moving a folder to a different organisation",
 			source:      "bravo",
 			dst:         "foxtrot",
-			folders:     folder.GetSampleData("moveFolder_exampleScenario.json"),
+			folders:     folder.GetSampleData(dataFile),
 			isError:     true,
 			errorString: "cannot move a folder to a different organisation",
 		},
@@ -62,7 +63,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			name:        "source folder does not exist",
 			source:      "invalid_folder",
 			dst:         "delta",
-			folders:     folder.GetSampleData("moveFolder_exampleScenario.json"),
+			folders:     folder.GetSampleData(dataFile),
 			isError:     true,
 			errorString: "source folder does not exist",
 		},
@@ -70,7 +71,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			name:        "destination folder does not exist",
 			source:      "bravo",
 			dst:         "invalid_folder",
-			folders:     folder.GetSampleData("moveFolder_exampleScenario.json"),
+			folders:     folder.GetSampleData(dataFile),
 			isError:     true,
 			errorString: "destination folder does not exist",
 		},
@@ -78,7 +79,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			name:        "source folder is already in destination folder",
 			source:      "charlie",
 			dst:         "bravo",
-			folders:     folder.GetSampleData("moveFolder_exampleScenario.json"),
+			folders:     folder.GetSampleData(dataFile),
 			isError:     true,
 			errorString: "source folder is already in destination folder",
 		},

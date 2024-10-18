@@ -18,8 +18,8 @@ func Test_folder_GetAllFolders(t *testing.T) {
 	}{
 		{
 			name: "check all folders retrieved in example scenario",
- 			dataFile: "moveFolder_exampleScenario.json",
-	 		want: folder.GetSampleData("moveFolder_exampleScenario.json"),
+ 			dataFile: "./testData/moveFolder_exampleScenario.json",
+	 		want: folder.GetSampleData("./testData/moveFolder_exampleScenario.json"),
  		},
 	}
 	for _, tt := range tests {
@@ -30,6 +30,7 @@ func Test_folder_GetAllFolders(t *testing.T) {
 	}
 }
 func Test_folder_GetFoldersByOrgID(t *testing.T) {
+	const dataFile = "./testData/moveFolder_exampleScenario.json"
 	t.Parallel()
 	tests := [...]struct {
 		name    string
@@ -40,20 +41,20 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 		{
 			name: "check one folder with orgid retrieved",
 			orgID: uuid.FromStringOrNil("38b9879b-f73b-4b0e-b9d9-4fc4c23643a7"),
-			folders: folder.GetSampleData("moveFolder_exampleScenario.json"),
-	 		want: folder.GetSampleData("getFolderByOrgId_Test_1.json"),
+			folders: folder.GetSampleData(dataFile),
+	 		want: folder.GetSampleData("./testData/getFolderByOrgId_Test_1.json"),
  		},
 		 {
 			name: "check multiple folders with orgid folder retrieved",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
-			folders: folder.GetSampleData("moveFolder_exampleScenario.json"),
-	 		want: folder.GetSampleData("getFolderByOrgId_Test_2.json"),
+			folders: folder.GetSampleData(dataFile),
+	 		want: folder.GetSampleData("./testData/getFolderByOrgId_Test_2.json"),
  		},
 		 {
 			name: "check no folders with orgid folder retrieved",
 			orgID: uuid.FromStringOrNil("18c9879b-f7eb-4b0e-b9d9-4fc4c23643a6"),
-			folders: folder.GetSampleData("moveFolder_exampleScenario.json"),
-	 		want: folder.GetSampleData("getFolderByOrgId_Test_3.json"),
+			folders: folder.GetSampleData(dataFile),
+	 		want: folder.GetSampleData("./testData/getFolderByOrgId_Test_3.json"),
  		},
 	}
 	for _, tt := range tests {
@@ -65,6 +66,7 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 	}
 }
 func Test_folder_GetAllChildFolders(t *testing.T) {
+	const dataFile = "./testData/getAllChildFolders_exampleScenario.json"
 	t.Parallel()
 	tests := [...]struct {
 		name          string
@@ -79,23 +81,23 @@ func Test_folder_GetAllChildFolders(t *testing.T) {
 			name: "folder has multiple levels of children",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
 			folder: "alpha",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
-	 		want: folder.GetSampleData("getAllChildFolders_Test_1.json"),
+			folders: folder.GetSampleData(dataFile),
+	 		want: folder.GetSampleData("./testData/getAllChildFolders_Test_1.json"),
 			isError: false,
  		},
 		{
 			name: "folder has one direct child",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
 			folder: "bravo",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
-	 		want: folder.GetSampleData("getAllChildFolders_Test_2.json"),
+			folders: folder.GetSampleData(dataFile),
+	 		want: folder.GetSampleData("./testData/getAllChildFolders_Test_2.json"),
 			isError: false,
  		},
 		{
 			name: "root folder with no children",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
 			folder: "charlie",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
+			folders: folder.GetSampleData(dataFile),
 	 		want: []folder.Folder{},
 			isError: false,
  		},
@@ -103,7 +105,7 @@ func Test_folder_GetAllChildFolders(t *testing.T) {
 			name: "sub folder with no children",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
 			folder: "echo",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
+			folders: folder.GetSampleData(dataFile),
 	 		want: []folder.Folder{},
 			isError: false,
  		},
@@ -111,7 +113,7 @@ func Test_folder_GetAllChildFolders(t *testing.T) {
 			name: "folder does not exist",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
 			folder: "invalid",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
+			folders: folder.GetSampleData(dataFile),
 			isError: true,
 			errorString: "folder does not exist",
  		},
@@ -119,7 +121,7 @@ func Test_folder_GetAllChildFolders(t *testing.T) {
 			name: "organisation does not exist",
 			orgID: uuid.FromStringOrNil("c1576e17-b7c9-45a3-a6ae-9546248fb17a"),
 			folder: "alpha",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
+			folders: folder.GetSampleData(dataFile),
 			isError: true,
 			errorString: "organisation does not exist",
  		},
@@ -127,7 +129,7 @@ func Test_folder_GetAllChildFolders(t *testing.T) {
 			name: "folder does not exist in the specified organisation",
 			orgID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
 			folder: "foxtrot",
-			folders: folder.GetSampleData("getAllChildFolders_exampleScenario.json"),
+			folders: folder.GetSampleData(dataFile),
 			isError: true,
 			errorString: "folder does not exist in the specified organisation",
  		},
